@@ -1,100 +1,14 @@
-  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: no such table: schema_info: SELECT * FROM schema_info[0m
-  [4;35;1mSQL (0.000230)[0m   [0mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;36;1mSQL (0.024843)[0m   [0;1mCREATE TABLE schema_info (version integer)[0m
-  [4;35;1mSQL (0.001990)[0m   [0mINSERT INTO schema_info (version) VALUES(0)[0m
-  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
-  [4;35;1mSQL (0.000331)[0m   [0mSELECT version FROM schema_info[0m
-Migrating to CreateRooms (1)
-  [4;36;1mSQL (0.002799)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL) [0m
-  [4;35;1mSQL (0.001995)[0m   [0mUPDATE schema_info SET version = 1[0m
-  [4;36;1mSQL (0.000359)[0m   [0;1mSELECT version FROM schema_info[0m
-Migrating to CreatePeople (2)
-  [4;35;1mSQL (0.009934)[0m   [0mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL) [0m
-  [4;36;1mSQL (0.002042)[0m   [0;1mUPDATE schema_info SET version = 2[0m
-  [4;35;1mSQL (0.000309)[0m   [0mSELECT * FROM schema_info[0m
-  [4;36;1mSQL (0.000367)[0m   [0;1mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;35;1mSQL (0.000088)[0m   [0mPRAGMA index_list(people)[0m
-  [4;36;1mSQL (0.000082)[0m   [0;1mPRAGMA index_list(rooms)[0m
-  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
-  [4;35;1mSQL (0.000302)[0m   [0mSELECT version FROM schema_info[0m
-  [4;36;1mSQL (0.000225)[0m   [0;1mSELECT version FROM schema_info[0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
-  [4;36;1mSQL (0.000284)[0m   [0;1mSELECT version FROM schema_info[0m
-Migrating to CreatePeople (2)
-  [4;35;1mSQL (0.009962)[0m   [0mDROP TABLE people[0m
-  [4;36;1mSQL (0.002864)[0m   [0;1mUPDATE schema_info SET version = 1[0m
-  [4;35;1mSQL (0.000313)[0m   [0mSELECT version FROM schema_info[0m
-Migrating to CreateRooms (1)
-  [4;36;1mSQL (0.002600)[0m   [0;1mDROP TABLE rooms[0m
-  [4;35;1mSQL (0.002322)[0m   [0mUPDATE schema_info SET version = 0[0m
-  [4;36;1mSQL (0.000313)[0m   [0;1mSELECT * FROM schema_info[0m
-  [4;35;1mSQL (0.000251)[0m   [0mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;36;1mSQL (0.000000)[0m   [0;1mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: table schema_info already exists: CREATE TABLE schema_info (version integer)[0m
-  [4;36;1mSQL (0.000339)[0m   [0;1mSELECT version FROM schema_info[0m
-Migrating to CreateRoomsAndPeople (1)
-  [4;35;1mSQL (0.024409)[0m   [0mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
-  [4;36;1mSQL (0.007128)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "maximum_occupancy" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.003440)[0m   [0mCREATE TABLE people_rooms ("id" INTEGER PRIMARY KEY NOT NULL, "person_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL) [0m
-  [4;36;1mSQL (0.002608)[0m   [0;1mUPDATE schema_info SET version = 1[0m
-  [4;35;1mSQL (0.000318)[0m   [0mSELECT * FROM schema_info[0m
-  [4;36;1mSQL (0.000429)[0m   [0;1mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;35;1mSQL (0.000087)[0m   [0mPRAGMA index_list(people)[0m
-  [4;36;1mSQL (0.000085)[0m   [0;1mPRAGMA index_list(people_rooms)[0m
-  [4;35;1mSQL (0.000084)[0m   [0mPRAGMA index_list(rooms)[0m
-  [4;36;1mSQL (0.000861)[0m   [0;1mSELECT * FROM schema_info[0m
-  [4;35;1mSQL (0.000564)[0m   [0mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;36;1mSQL (0.000085)[0m   [0;1mPRAGMA index_list(people)[0m
-  [4;35;1mSQL (0.000082)[0m   [0mPRAGMA index_list(people_rooms)[0m
-  [4;36;1mSQL (0.000082)[0m   [0;1mPRAGMA index_list(rooms)[0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people: DROP TABLE people[0m
-  [4;36;1mSQL (0.009971)[0m   [0;1mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people_rooms: DROP TABLE people_rooms[0m
-  [4;36;1mSQL (0.002587)[0m   [0;1mCREATE TABLE people_rooms ("id" INTEGER PRIMARY KEY NOT NULL, "person_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: rooms: DROP TABLE rooms[0m
-  [4;36;1mSQL (0.002565)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "maximum_occupancy" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.002742)[0m   [0mCREATE TABLE schema_info (version integer)[0m
-  [4;36;1mSQL (0.009701)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
-  [4;35;1mSQL (0.002448)[0m   [0mUPDATE schema_info SET version = 1[0m
-  [4;36;1mSQL (0.000780)[0m   [0;1mSELECT * FROM schema_info[0m
+  [4;36;1mSQL (0.000761)[0m   [0;1mSELECT * FROM schema_info[0m
   [4;35;1mSQL (0.000436)[0m   [0mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;36;1mSQL (0.000084)[0m   [0;1mPRAGMA index_list(people)[0m
-  [4;35;1mSQL (0.000082)[0m   [0mPRAGMA index_list(people_rooms)[0m
-  [4;36;1mSQL (0.000081)[0m   [0;1mPRAGMA index_list(rooms)[0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people: DROP TABLE people[0m
-  [4;36;1mSQL (0.022222)[0m   [0;1mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people_rooms: DROP TABLE people_rooms[0m
-  [4;36;1mSQL (0.004313)[0m   [0;1mCREATE TABLE people_rooms ("id" INTEGER PRIMARY KEY NOT NULL, "person_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: rooms: DROP TABLE rooms[0m
-  [4;36;1mSQL (0.002948)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "maximum_occupancy" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.004096)[0m   [0mCREATE TABLE schema_info (version integer)[0m
-  [4;36;1mSQL (0.002451)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
-  [4;35;1mSQL (0.004048)[0m   [0mUPDATE schema_info SET version = 1[0m
-  [4;36;1mSQL (0.000771)[0m   [0;1mSELECT * FROM schema_info[0m
-  [4;35;1mSQL (0.000434)[0m   [0mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;36;1mSQL (0.000110)[0m   [0;1mPRAGMA index_list(people)[0m
+  [4;36;1mSQL (0.000085)[0m   [0;1mPRAGMA index_list(people)[0m
   [4;35;1mSQL (0.000082)[0m   [0mPRAGMA index_list(people_rooms)[0m
   [4;36;1mSQL (0.000083)[0m   [0;1mPRAGMA index_list(rooms)[0m
   [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people: DROP TABLE people[0m
-  [4;36;1mSQL (0.105043)[0m   [0;1mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
+  [4;36;1mSQL (0.029406)[0m   [0;1mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
   [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people_rooms: DROP TABLE people_rooms[0m
-  [4;36;1mSQL (0.003520)[0m   [0;1mCREATE TABLE people_rooms ("id" INTEGER PRIMARY KEY NOT NULL, "person_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL) [0m
+  [4;36;1mSQL (0.002897)[0m   [0;1mCREATE TABLE people_rooms ("id" INTEGER PRIMARY KEY NOT NULL, "person_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL) [0m
   [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: rooms: DROP TABLE rooms[0m
-  [4;36;1mSQL (0.002869)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "maximum_occupancy" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.003102)[0m   [0mCREATE TABLE schema_info (version integer)[0m
-  [4;36;1mSQL (0.002188)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
-  [4;35;1mSQL (0.002526)[0m   [0mUPDATE schema_info SET version = 1[0m
-  [4;36;1mSQL (0.000807)[0m   [0;1mSELECT * FROM schema_info[0m
-  [4;35;1mSQL (0.000434)[0m   [0mSELECT name FROM sqlite_master WHERE type = 'table'[0m
-  [4;36;1mSQL (0.000085)[0m   [0;1mPRAGMA index_list(people)[0m
-  [4;35;1mSQL (0.000084)[0m   [0mPRAGMA index_list(people_rooms)[0m
-  [4;36;1mSQL (0.000082)[0m   [0;1mPRAGMA index_list(rooms)[0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people: DROP TABLE people[0m
-  [4;36;1mSQL (0.017608)[0m   [0;1mCREATE TABLE people ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL) [0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: people_rooms: DROP TABLE people_rooms[0m
-  [4;36;1mSQL (0.002525)[0m   [0;1mCREATE TABLE people_rooms ("id" INTEGER PRIMARY KEY NOT NULL, "person_id" integer DEFAULT NULL, "room_id" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.000000)[0m   [0mSQLite3::SQLException: no such table: rooms: DROP TABLE rooms[0m
-  [4;36;1mSQL (0.002427)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "maximum_occupancy" integer DEFAULT NULL) [0m
-  [4;35;1mSQL (0.002475)[0m   [0mCREATE TABLE schema_info (version integer)[0m
-  [4;36;1mSQL (0.009441)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
-  [4;35;1mSQL (0.002270)[0m   [0mUPDATE schema_info SET version = 1[0m
+  [4;36;1mSQL (0.002889)[0m   [0;1mCREATE TABLE rooms ("id" INTEGER PRIMARY KEY NOT NULL, "name" varchar(255) DEFAULT NULL, "maximum_occupancy" integer DEFAULT NULL) [0m
+  [4;35;1mSQL (0.003147)[0m   [0mCREATE TABLE schema_info (version integer)[0m
+  [4;36;1mSQL (0.004004)[0m   [0;1mINSERT INTO schema_info (version) VALUES(0)[0m
+  [4;35;1mSQL (0.002317)[0m   [0mUPDATE schema_info SET version = 1[0m
