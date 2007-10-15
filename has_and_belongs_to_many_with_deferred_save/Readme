@@ -20,6 +20,10 @@ You can then validate the unsaved collection as you would any other attribute, a
 
 The unsaved collection is automatically saved when you call save on the model.
 
+==How to install
+
+./script/plugin install http://habtm-with-deferred-save.googlecode.com/svn/trunk/has_and_belongs_to_many_with_deferred_save
+
 ==Project home
 
 http://code.google.com/p/habtm-with-deferred-save/
