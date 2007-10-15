@@ -1,0 +1,35 @@
+=has_and_belongs_to_many_with_deferred_save
+
+==Example
+
+Room has_and_belongs_to_many_with_deferred_save People
+
+Lets say you want to validate your "has_and_belongs_to_many collection attribute" (Room.people in this example) so that it limits the number of objects in the collection to some maximum.
+
+This isn't possible with the standard has_and_belongs_to_many due to these two problems:
+
+1. When I do the assignment to my collection (room.people = whatever), it IMMEDIATELY saves it in my join table (people_rooms) rather than waiting until I call room.save.
+
+2. You can "validate" using habtm's :before_add option ... but it seems that any errors added there end up being ignored/lost. Plus, the only way to abort the save seems to be to raise an exception...
+
+I don't want to raise an exception when the user violates my validation. I want validation of the people collection to be handled the same as any other field in the Room model: I want it to simply add an error to the Room model's error array which we can than display on the form with the other input errors.
+
+has_and_belongs_to_many_with_deferred_save solves this problem by overriding the setter method for your collection (people=), causing it to store the new members in a temporary variable rather than saving it immediately.
+
+You can then validate the unsaved collection as you would any other attribute, adding to self.errors if something is invalid about the collection (too many members, etc.).
+
+The unsaved collection is automatically saved when you call save on the model.
+
+
+==Project home
+
+http://code.google.com/p/habtm-with-deferred-save/
+
+
+==History
+
+It started as a post to the Rails mailing list asking how to validate a has_and_belongs_to_many collection/association (see http://www.ruby-forum.com/topic/81095).
+
+==Copyright
+
+2007 (c) QualitySmith, Inc.
