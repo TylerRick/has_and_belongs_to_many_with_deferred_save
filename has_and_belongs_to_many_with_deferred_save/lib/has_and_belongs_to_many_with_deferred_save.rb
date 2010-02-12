@@ -22,6 +22,7 @@ module ActiveRecord
         collection_name = args[0].to_s
 
         attr_accessor :"unsaved_#{collection_name}"
+        attr_accessor :"use_original_collection_reader_behavior_for_#{collection_name}"
 
         define_method "#{collection_name}_with_deferred_save=" do |collection|
           #puts "has_and_belongs_to_many_with_deferred_save: #{collection_name} = #{collection.collect(&:id).join(',')}"
@@ -29,7 +30,7 @@ module ActiveRecord
         end
 
         define_method "#{collection_name}_with_deferred_save" do |*args|
-          if @use_original_collection_reader_behavior
+          if self.send("use_original_collection_reader_behavior_for_#{collection_name}")
             self.send("#{collection_name}_without_deferred_save")
           else
             if self.send("unsaved_#{collection_name}").nil?
@@ -43,7 +44,7 @@ module ActiveRecord
         alias_method_chain :"#{collection_name}", 'deferred_save'
 
 
-        define_method "before_save_with_deferred_save" do
+        define_method "before_save_with_deferred_save_for_#{collection_name}" do
           # Question: Why do we need this @use_original_collection_reader_behavior stuff?
           # Answer: Because AssociationCollection#replace(other_array) performs a diff between current_array and other_array and deletes/adds only 
           # records that have changed.
@@ -53,28 +54,30 @@ module ActiveRecord
           # two identical collections so nothing would ever get saved.
           # But we only want the old behavior in this case -- most of the time we want the *new* behavior -- so we use 
           # @use_original_collection_reader_behavior as a switch.
+          
+          if self.respond_to? :"before_save_without_deferred_save_for_#{collection_name}"
+            self.send("before_save_without_deferred_save_for_#{collection_name}") 
+          end  
 
-          before_save_without_deferred_save   if self.respond_to? :before_save_without_deferred_save
-
-          @use_original_collection_reader_behavior = true
+          self.send "use_original_collection_reader_behavior_for_#{collection_name}=", true
           self.send "#{collection_name}_without_deferred_save=", self.send("unsaved_#{collection_name}")
             # /\ This is where the actual save occurs.
-          @use_original_collection_reader_behavior = false
+          self.send "use_original_collection_reader_behavior_for_#{collection_name}=", false
 
           true
         end
-        alias_method_chain :"before_save", 'deferred_save'
+        alias_method_chain :"before_save", "deferred_save_for_#{collection_name}"
 
 
-        define_method "reload_with_deferred_save" do
+        define_method "reload_with_deferred_save_for_#{collection_name}" do
           # Reload from the *database*, discarding any unsaved changes.
-          returning reload_without_deferred_save do
+          returning self.send("reload_without_deferred_save_for_#{collection_name}") do
             self.send "unsaved_#{collection_name}=", nil
               # /\ If we didn't do this, then when we called reload, it would still have the same (possibly invalid) value of
               # unsaved_collection that it had before the reload.
           end
         end
-        alias_method_chain :"reload", 'deferred_save'
+        alias_method_chain :"reload", "deferred_save_for_#{collection_name}"
 
 
         define_method "initialize_unsaved_#{collection_name}" do |*args|
