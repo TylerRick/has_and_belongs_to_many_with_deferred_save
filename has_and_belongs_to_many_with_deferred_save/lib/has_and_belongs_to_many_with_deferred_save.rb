@@ -20,6 +20,7 @@ module ActiveRecord
       def has_and_belongs_to_many_with_deferred_save(*args)
         has_and_belongs_to_many *args
         collection_name = args[0].to_s
+        collection_singular_ids = collection_name.singularize + "_ids"
 
         attr_accessor :"unsaved_#{collection_name}"
         attr_accessor :"use_original_collection_reader_behavior_for_#{collection_name}"
@@ -42,6 +43,19 @@ module ActiveRecord
 
         alias_method_chain :"#{collection_name}=", 'deferred_save'
         alias_method_chain :"#{collection_name}", 'deferred_save'
+
+        define_method "#{collection_singular_ids}_with_deferred_save" do |*args|
+          if self.send("use_original_collection_reader_behavior_for_#{collection_name}")
+            self.send("#{collection_singular_ids}_without_deferred_save")
+          else
+            if self.send("unsaved_#{collection_name}").nil?
+              send("initialize_unsaved_#{collection_name}", *args)
+            end
+            self.send("unsaved_#{collection_name}").map { |e| e[:id] }
+          end
+        end
+
+        alias_method_chain :"#{collection_singular_ids}", 'deferred_save'
 
 
         define_method "before_save_with_deferred_save_for_#{collection_name}" do
@@ -90,7 +104,23 @@ module ActiveRecord
             # Important: If we don't use clone, then it does an assignment by reference and any changes to unsaved_collection
             # will also change *collection_without_deferred_save*! (Not what we want! Would result in us saving things
             # immediately, which is exactly what we're trying to avoid.)
+          
+          # trick collection_name.include?(obj)
+          # If you use a collection of SignelTableInheritance and didn't :select 'type' the
+          # include? method will not find any subclassed object.
+          class << eval("@unsaved_#{collection_name}")
+            def include_with_deferred_save?(obj)
+              if self.find { |itm| itm == obj || (itm[:id] == obj[:id] && obj.is_a?(itm.class) ) }
+                return true
+              else
+                return false
+              end
+            end
+            alias_method_chain :include?, 'deferred_save'
+          end
         end
+        private :"initialize_unsaved_#{collection_name}"
+        
       end
     end
   end
