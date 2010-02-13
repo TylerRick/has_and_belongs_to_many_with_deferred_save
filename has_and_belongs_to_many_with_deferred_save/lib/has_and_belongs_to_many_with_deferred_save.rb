@@ -74,6 +74,9 @@ module ActiveRecord
           end  
 
           self.send "use_original_collection_reader_behavior_for_#{collection_name}=", true
+          if self.send("unsaved_#{collection_name}").nil?
+            send("initialize_unsaved_#{collection_name}", *args)
+          end
           self.send "#{collection_name}_without_deferred_save=", self.send("unsaved_#{collection_name}")
             # /\ This is where the actual save occurs.
           self.send "use_original_collection_reader_behavior_for_#{collection_name}=", false
