@@ -21,6 +21,9 @@ module ActiveRecord
         has_and_belongs_to_many *args
         collection_name = args[0].to_s
         collection_singular_ids = collection_name.singularize + "_ids"
+        
+        # this will delete all the assocation into the join table after obj.destroy
+        after_destroy { |record| record.save }
 
         attr_accessor :"unsaved_#{collection_name}"
         attr_accessor :"use_original_collection_reader_behavior_for_#{collection_name}"
