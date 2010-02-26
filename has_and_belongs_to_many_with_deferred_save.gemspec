@@ -5,7 +5,7 @@
 
 Gem::Specification.new do |s|
   s.name = %q{has_and_belongs_to_many_with_deferred_save}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Tyler Rick", "Alessio Caiazza"]
@@ -24,6 +24,7 @@ Gem::Specification.new do |s|
      "spec/db/database.yml",
      "spec/db/schema.rb",
      "spec/has_and_belongs_to_many_with_deferred_save_spec.rb",
+     "spec/models/door.rb",
      "spec/models/person.rb",
      "spec/models/room.rb",
      "spec/spec_helper.rb",
@@ -35,7 +36,8 @@ Gem::Specification.new do |s|
   s.rubygems_version = %q{1.3.5}
   s.summary = %q{Make ActiveRecord defer/postpone saving the records you add to an habtm (has_and_belongs_to_many) association until you call model.save, allowing validation in the style of normal attributes.}
   s.test_files = [
-    "spec/models/room.rb",
+    "spec/models/door.rb",
+     "spec/models/room.rb",
      "spec/models/person.rb",
      "spec/has_and_belongs_to_many_with_deferred_save_spec.rb",
      "spec/spec_helper.rb",
