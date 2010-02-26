@@ -8,7 +8,7 @@ ActiveRecord::Schema.define(:version => 1) do
     t.column "name", :string
   end
 
-  create_table "people_rooms", :force => true do |t|
+  create_table "people_rooms", :id => false, :force => true do |t|
     t.column "person_id", :integer
     t.column "room_id",   :integer
   end
