@@ -5,9 +5,9 @@ describe "has_and_belongs_to_many_with_deferred_save" do
   describe "room maximum_occupancy" do
     before :all do
       @people = []
-      @people << Person.create
-      @people << Person.create
-      @people << Person.create
+      @people << Person.create(:name => 'Filbert')
+      @people << Person.create(:name => 'Miguel')
+      @people << Person.create(:name => 'Rainer')
       @room = Room.new(:maximum_occupancy => 2)
     end
     after :all do
@@ -117,6 +117,19 @@ describe "has_and_belongs_to_many_with_deferred_save" do
       @people[2].valid?
       @people[2].errors.on(:rooms).should == "This room has reached its maximum occupancy"
       @room.reload.people.size.should == 2
+    end
+
+    it "still lets you do find" do
+      #@room.people2.                     find(:first, :conditions => {:name => 'Filbert'}).should == @people[0]
+      #@room.people_without_deferred_save.find(:first, :conditions => {:name => 'Filbert'}).should == @people[0]
+      #@room.people2.first(:conditions                      => {:name => 'Filbert'}).should == @people[0]
+      #@room.people_without_deferred_save.first(:conditions => {:name => 'Filbert'}).should == @people[0]
+      #@room.people_without_deferred_save.find_by_name('Filbert').should == @people[0]
+
+      @room.people.find(:first, :conditions => {:name => 'Filbert'}).should == @people[0]
+      @room.people.first(:conditions => {:name => 'Filbert'}).       should == @people[0]
+      @room.people.last(:conditions => {:name => 'Filbert'}).        should == @people[0]
+      @room.people.find_by_name('Filbert').                          should == @people[0]
     end
   end
 

@@ -1,5 +1,6 @@
 class Room < ActiveRecord::Base
   has_and_belongs_to_many_with_deferred_save :people, :before_add => :before_adding_person
+  has_and_belongs_to_many :people2, :class_name => 'Person'
   has_and_belongs_to_many_with_deferred_save :doors
 
   def validate
