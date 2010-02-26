@@ -1,9 +1,10 @@
 class Room < ActiveRecord::Base
   has_and_belongs_to_many_with_deferred_save :people, :before_add => :before_adding_person
+  has_and_belongs_to_many_with_deferred_save :doors
 
   def validate
     if people.size > maximum_occupancy
-      errors.add :people, "There are too many people in this room"
+      errors.add :people, "This room has reached its maximum occupancy"
     end
   end
 

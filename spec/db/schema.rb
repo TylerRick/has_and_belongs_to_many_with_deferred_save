@@ -18,4 +18,13 @@ ActiveRecord::Schema.define(:version => 1) do
     t.column "maximum_occupancy", :integer
   end
 
+  create_table "doors_rooms", :id => false, :force => true do |t|
+    t.column "door_id",   :integer
+    t.column "room_id",   :integer
+  end
+
+  create_table "doors", :force => true do |t|
+    t.column "name",              :string
+  end
+
 end
